@@ -1,0 +1,41 @@
+﻿<html >
+<head>
+    <title>Parking spot finder</title>
+</head>
+<body>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAWqGtmStUNWI0yHvFSj7SDXVwBH5prfbs&sensor=false"></script>
+
+<script type="text/javascript">
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (p) {
+        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        var mapOptions = {
+            center: LatLng,
+            zoom: 17,
+
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        var marker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            animation: google.maps.Animation.BOUNCE,
+            view:"You are Welcome to Park to Your Nearest Place",
+            title: "Your Current Location"
+        });
+        google.maps.event.addListener(marker, "click", function (e) {
+            var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(marker.view);
+            infoWindow.open(map, marker);
+        });
+    });
+} else {
+    alert('Geo Location feature is not supported in this browser.');
+}
+</script>
+<div id="dvMap" style="width: 600px; height: 600px">
+</div>
+</body>
+</html>
